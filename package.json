@@ -1,0 +1,39 @@
+{
+  "name": "tapster",
+  "version": "1.0.0",
+  "description": "Tapster project",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "runner": "node runner.js",
+    "tapsterfrontend": "npm start --prefix tapsterfrontend",
+    "dev": "concurrently \"npm run server\" \"npm run tapsterfrontend\""
+  },
+  "author": "Group3",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "babel-cli": "^6.26.0",
+    "body-parser": "^1.18.3",
+    "concurrently": "^4.1.0",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^3.1.13",
+    "mongoose": "^5.4.19",
+    "passport": "^0.4.0",
+    "passport-google-token": "^0.1.2",
+    "react-bootstrap": "^1.0.0-beta.5",
+    "react-dom": "^16.8.4",
+    "react-modal": "^3.8.1",
+    "react-router-dom": "^4.3.1",
+    "request": "^2.88.0",
+    "underscore": "^1.9.1",
+    "validator": "^10.11.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  }
+}
