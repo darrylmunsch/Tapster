@@ -5,19 +5,19 @@ module.exports = function (app) {
     var drink = require('../controller/drinksController.js');
 
 
-    app.route('/drinks')
+    app.route('/api/drinks')
         .get(drink.drinks);
 
-    app.route('/drinks/:drinkId')
+    app.route('/api/drinks/:drinkId')
         .get(drink.getdrink);
 
-    app.route('/comparequery')
+    app.route('/api/comparequery')
         .get(drink.comparequery);
 
-    app.route('/singlequery')
+    app.route('/api/singlequery')
         .get(drink.singlequery);
 
-    app.route('/partialquery')
+    app.route('/api/partialquery')
         .get(drink.partialquery);
 
 
