@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import AppNavbar from '../components/NavBar/appNavbar';
 import SearchMenu from '../components/IngSearchBar/menu';
 import Results from '../components/Results/results';
 import Footer from '../components/Footer/footer';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 
