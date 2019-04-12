@@ -5,6 +5,7 @@ import SearchMenu from '../components/IngSearchBar/menu';
 import Results from '../components/Results/results';
 import Footer from '../components/Footer/footer';
 import './App.css';
+import LoginModal from '../components/Forms/LoginModal';
 
 
 
@@ -44,6 +45,7 @@ class App extends Component {
         <Results />
         <br/>
         <br/>
+        <LoginModal/>
         <br/>
         <br/>
         <Footer />
