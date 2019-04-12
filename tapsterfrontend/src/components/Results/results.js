@@ -29,6 +29,7 @@ class Results extends Component {
     this.handleSingleTabSearch = this.handleSingleTabSearch.bind(this);
     this.handlePartialTabSearch = this.handlePartialTabSearch.bind(this);
     this.handleCompareTabSearch = this.handleCompareTabSearch.bind(this);
+    this.handleExactTabSearch = this.handleExactTabSearch.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
 
@@ -64,6 +65,22 @@ class Results extends Component {
       .then(results => this.setState({ results }, () => console.log('Partial Results fetched...', results)));
 
   }
+  handleExactTabSearch() {
+    fetch('/api/exactquery')
+      .then(res => res.json())
+      .then(results => this.setState({ results }, () => console.log('Exact Results fetched...', results)));
+
+  }
+
+  /*getIngredients= (item) => {
+    var ingred = [];
+    for (var i = 0; i < 12; i++) {
+      if (item[`strIngredient${i}`] != null || "")
+        ingred.push(item[`strIngredient${i}`])
+    }
+    return ingred;
+  }*/
+
   handleClose() {
     this.setState({ show: false });
   }
@@ -91,6 +108,9 @@ class Results extends Component {
             </Nav.Item>
             <Nav.Item>
               <Nav.Link className="tabs_style" eventkey="singleTab" onClick={this.handleSingleTabSearch} onSelect={key => this.setState({ key })} >Single Search</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link className="tabs_style" eventkey="exactTab" onClick={this.handleExactTabSearch} onSelect={key => this.setState({ key })} >Exact Search</Nav.Link>
             </Nav.Item>
           </Nav>
           <Modal.Body style={{ 'maxHeight': 'calc(100vh - 210px)', 'overflowY': 'auto' }} >

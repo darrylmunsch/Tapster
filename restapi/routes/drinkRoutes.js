@@ -20,6 +20,9 @@ module.exports = function (app) {
     app.route('/api/partialquery')
         .get(drink.partialquery);
 
+    app.route('/api/exactquery')
+        .get(drink.exactquery);
+
 
 
 
