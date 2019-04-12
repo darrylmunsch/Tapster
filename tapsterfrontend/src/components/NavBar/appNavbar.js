@@ -39,7 +39,7 @@ class AppNavbar extends Component {
             <Nav className="ml-auto" navbar>
               <NavItem >
                 <NavLink >
-                  Log In
+                  Log In / Register
                 </NavLink>
               </NavItem>
             </Nav>

@@ -115,21 +115,21 @@ class Pagination extends Component {
         return (
             <ul className="pagination" >
                 <li className={pager.currentPage === 1 ? 'disabled' : ''}>
-                    <button class="button_style2" onClick={() => this.setPage(1)}>First</button>
+                    <button className="button_style2" onClick={() => this.setPage(1)}>First</button>
                 </li>
                 <li className={pager.currentPage === 1 ? 'disabled' : ''}>
-                    <button class="button_style2" onClick={() => this.setPage(pager.currentPage - 1)}>Previous</button>
+                    <button className="button_style2" onClick={() => this.setPage(pager.currentPage - 1)}>Previous</button>
                 </li>
                 {pager.pages.map((page, index) =>
                     <li key={index} className={pager.currentPage === page ? 'active' : ''}>
-                        <button class="button_style2" onClick={() => this.setPage(page)}>{page}</button>
+                        <button className="button_style2" onClick={() => this.setPage(page)}>{page}</button>
                     </li>
                 )}
                 <li className={pager.currentPage === pager.totalPages ? 'disabled' : ''}>
-                    <button class="button_style2" onClick={() => this.setPage(pager.currentPage + 1)}>Next</button>
+                    <button className="button_style2" onClick={() => this.setPage(pager.currentPage + 1)}>Next</button>
                 </li>
                 <li className={pager.currentPage === pager.totalPages ? 'disabled' : ''}>
-                    <button class="button_style2" onClick={() => this.setPage(pager.totalPages)}>Last</button>
+                    <button className="button_style2" onClick={() => this.setPage(pager.totalPages)}>Last</button>
                 </li>
             </ul>
         );

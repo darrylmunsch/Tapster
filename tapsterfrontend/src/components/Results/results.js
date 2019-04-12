@@ -88,8 +88,8 @@ class Results extends Component {
 
   render() {
     return (
-      <div class="center_search">
-        <button class="button_style2"
+      <div className="center_search">
+        <button className="button_style2"
           onClick={this.handleClickSearch}>
           Search Database
         </button>
