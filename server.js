@@ -2,8 +2,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const cors = require('cors');
+const passport = require("passport");
 
-
+const users = require("./restapi/routes/userRoutes");
 var Drink = require('./restapi/models/drinksModel');
 const bodyParser = require('body-parser');
 
@@ -25,6 +26,8 @@ app.use(session({
     cookie:{maxAge: 3600000, secure: false}
 }));
 
+// Routes
+app.use("/api/users", users);
 drinkroutes = require('./restapi/routes/drinkRoutes');
 drinkroutes(app);
 
@@ -39,13 +42,24 @@ const database = require('./config/keys').mongoURI;
 
 //Connect to Mongo
 mongoose
-    .connect(database, { useNewUrlParser: true })
+    .connect(
+        database,
+         { useNewUrlParser: true }
+    )
     .then(() => console.log('MongoDB Connected...'))
     .catch(err => console.log(err));
 
-    const port = process.env.PORT || 5000;
+// Passport middleware
+app.use(passport.initialize());
+
+// Passport Config
+require("./config/passport") (passport);
+
+
+
+const port = process.env.PORT || 5000;
     
 
 
-    app.listen(port, () => console.log(`Server started on port ${port}`));
+app.listen(port, () => console.log(`Server started on port ${port}`));
 
