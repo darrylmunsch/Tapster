@@ -6,18 +6,14 @@ import Form from 'react-bootstrap/Form';
 import "./forms.css";
 
 
-class LoginModal extends Component {
+class RegisterModal extends Component {
     constructor(props, context) {
         super(props, context);
 
         this.state = {
             show: false,
             validated: false,
-            name: "",
-            email: "",
-            password: "",
-            password2: ""
-
+            userCreds: {name: "", email: "", password: "", password2: ""}
         };
 
         this.handleShow = () => {
@@ -29,19 +25,19 @@ class LoginModal extends Component {
         };
 
         this.onChangeName = (event) => {
-            this.setState({ name: event.target.value });
+            this.setState({userCreds:{ ...this.state.userCreds,name: event.target.value}});
         };
 
         this.onChangeEmail = (event) => {
-            this.setState({ email: event.target.value });
+            this.setState({ userCreds:{ ...this.state.userCreds,email: event.target.value}});
         };
 
         this.onChangePassword = (event) => {
-            this.setState({ password: event.target.value });
+            this.setState({ userCreds:{ ...this.state.userCreds,password: event.target.value}});
         };
 
         this.onChangePassword2 = (event) => {
-            this.setState({ password2: event.target.value });
+            this.setState({ userCreds:{ ...this.state.userCreds,password2: event.target.value}});
         };
 
         this.handleSubmit = (event) => {
@@ -52,9 +48,12 @@ class LoginModal extends Component {
             }
             this.setState({ validated: true });
             console.log(
-                "email: " + this.state.email,
-                "password: " + this.state.password,
+                "username: " + this.state.userCreds.name,
+                "email: " + this.state.userCreds.email,
+                "password: " + this.state.userCreds.password,
+                "password2: " + this.state.usreCreds.password2
             )
+
         };
     }
 
@@ -63,7 +62,7 @@ class LoginModal extends Component {
         return (
             <div>
                 <button className="button_text" onClick={this.handleShow}>
-                    Log In
+                    Register
             </button>
 
                 <Modal
@@ -73,7 +72,7 @@ class LoginModal extends Component {
                     onHide={this.handleHide}
                 >
                     <Modal.Header closeButton>
-                        <Modal.Title>Log In</Modal.Title>
+                        <Modal.Title>Register</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <Form
@@ -82,6 +81,18 @@ class LoginModal extends Component {
                             onSubmit={e => this.handleSubmit(e)}
                         >
                             <Form.Row>
+                                <Form.Group as={Col} md="10" controlId="validationCustom01">
+                                    <Form.Label>Username</Form.Label>
+                                    <Form.Control
+                                        required
+                                        type="text"
+                                        placeholder="Username"
+                                        onChange={this.onChangeName}
+                                        value={this.state.name}
+                                    />
+                                    <Form.Control.Feedback>Valid</Form.Control.Feedback>
+                                    <Form.Control.Feedback type="invalid">Username is invalid</Form.Control.Feedback>
+                                </Form.Group>
                                 <Form.Group as={Col} md="10" controlId="validationCustom02">
                                     <Form.Label>Email</Form.Label>
                                     <Form.Control
@@ -102,9 +113,27 @@ class LoginModal extends Component {
                                         onChange={this.onChangePassword}
                                         value={this.state.password}
                                     />
-                                    <Form.Control.Feedback type="invalid">Password invalid</Form.Control.Feedback>
+                                    <Form.Control.Feedback type="invalid">Password must contain 6 - 30 characters</Form.Control.Feedback>
+                                </Form.Group>
+                                <Form.Group as={Col} md="10" controlId="validationCustom04">
+                                    <Form.Label>Confirm Password</Form.Label>
+                                    <Form.Control
+                                        required
+                                        type="password"
+                                        placeholder="Re-enter Password"
+                                        onChange={this.onChangePassword2}
+                                        value={this.state.password2}
+                                    />
+                                    <Form.Control.Feedback type="invalid">Passwords do not match</Form.Control.Feedback>
                                 </Form.Group>
                             </Form.Row>
+                            <Form.Group>
+                                <Form.Check
+                                    required
+                                    label="Agree to share Tapster with your friends!"
+                                    feedback="You must agree before submitting."
+                                />
+                            </Form.Group>
                             <Button type="submit">Submit form</Button>
                         </Form>
                     </Modal.Body>
@@ -114,4 +143,4 @@ class LoginModal extends Component {
     }
 }
 
-export default LoginModal
+export default RegisterModal

@@ -4,8 +4,9 @@ import AppNavbar from '../components/NavBar/appNavbar';
 import SearchMenu from '../components/IngSearchBar/menu';
 import Results from '../components/Results/results';
 import Footer from '../components/Footer/footer';
-import './App.css';
 import LoginModal from '../components/Forms/LoginModal';
+import './App.css';
+import RegisterModal from '../components/Forms/RegisterModal';
 
 
 
@@ -46,6 +47,7 @@ class App extends Component {
         <br/>
         <br/>
         <LoginModal/>
+        <RegisterModal/>
         <br/>
         <br/>
         <Footer />

@@ -1,5 +1,5 @@
 /* https://reactstrap.github.io/components/navbar/ */
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   Collapse,
   Navbar,
@@ -10,12 +10,15 @@ import {
   Container
 } from 'reactstrap';
 import NavLink from 'react-bootstrap/NavLink';
+import LoginModal from '../Forms/LoginModal';
+import RegisterModal from '../Forms/RegisterModal';
 
 class AppNavbar extends Component {
   state = {
-      isOpen: false
+    isOpen: false
   }
-  
+
+
   toggle = () => {
     this.setState({
       isOpen: !this.state.isOpen
@@ -25,28 +28,33 @@ class AppNavbar extends Component {
 
 
   render() {
-    return(
-    <div>
-      <style>
-        @import url("https://fonts.googleapis.com/css?family=Megrim");
-        @import url("https://fonts.googleapis.com/css?family=Oswald");
+    return (
+      <div>
+        <style>
+          @import url("https://fonts.googleapis.com/css?family=Megrim");
+          @import url("https://fonts.googleapis.com/css?family=Oswald");
       </style>
-      <Navbar color="secondary" dark expand="sm">
-        <Container>
-          <NavbarBrand href="/">TAPSTER</NavbarBrand>
-          <NavbarToggler onClick={this.toggle} /> 
-          <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className="ml-auto" navbar>
-              <NavItem >
-                <NavLink >
-                  Log In / Register
+        <Navbar color="secondary" dark expand="sm">
+          <Container>
+            <NavbarBrand href="/">TAPSTER</NavbarBrand>
+            <NavbarToggler onClick={this.toggle} />
+            <Collapse isOpen={this.state.isOpen} navbar>
+              <Nav className="ml-auto" navbar>
+                <NavItem >
+                  <NavLink >
+                    <LoginModal />
                 </NavLink>
-              </NavItem>
-            </Nav>
-          </Collapse>
-        </Container>
-      </Navbar>
-    </div>
+                </NavItem>
+                <NavItem>
+                  <NavLink>
+                    <RegisterModal />
+                  </NavLink>
+                </NavItem>
+              </Nav>
+            </Collapse>
+          </Container>
+        </Navbar>
+      </div>
     );
   }
 }
