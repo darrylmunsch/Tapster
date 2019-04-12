@@ -10,6 +10,7 @@ import {
   Container
 } from 'reactstrap';
 import NavLink from 'react-bootstrap/NavLink';
+import LoginPopUp from '../auth/Login';
 
 class AppNavbar extends Component {
   state = {
@@ -39,7 +40,7 @@ class AppNavbar extends Component {
             <Nav className="ml-auto" navbar>
               <NavItem >
                 <NavLink >
-                  Log In
+                  <LoginPopUp/>
                 </NavLink>
               </NavItem>
             </Nav>
