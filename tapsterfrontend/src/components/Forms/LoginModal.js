@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import "./forms.css";
+import Axios from 'axios';
 
 
 class LoginModal extends Component {
@@ -46,15 +47,30 @@ class LoginModal extends Component {
 
         this.handleSubmit = (event) => {
             const form = event.currentTarget;
+
             if (form.checkValidity() === false) {
                 event.preventDefault();
                 event.stopPropagation();
+            } else {
+                this.setState({ validated: true });
+                console.log(
+                    "email: " + this.state.email,
+                    "password: " + this.state.password,
+                );
+                const loginUser = {
+                    email: this.state.email,
+                    password: this.state.password
+                };
+                console.log(loginUser);
+                event.preventDefault();
+                Axios.post('/api/users/login', loginUser)
+                .then(res => { 
+                    console.log(res)
+                })
+                .catch(error => {
+                    console.log(error.response)
+                });
             }
-            this.setState({ validated: true });
-            console.log(
-                "email: " + this.state.email,
-                "password: " + this.state.password,
-            )
         };
     }
 

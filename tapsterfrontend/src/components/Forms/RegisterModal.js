@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import "./forms.css";
+import Axios from 'axios';
 
 
 class RegisterModal extends Component {
@@ -13,7 +14,11 @@ class RegisterModal extends Component {
         this.state = {
             show: false,
             validated: false,
-            userCreds: {name: "", email: "", password: "", password2: ""}
+            isInvalid: true,
+            name: "", 
+            email: "", 
+            password: "", 
+            password2: ""
         };
 
         this.handleShow = () => {
@@ -25,40 +30,52 @@ class RegisterModal extends Component {
         };
 
         this.onChangeName = (event) => {
-            this.setState({userCreds:{ ...this.state.userCreds,name: event.target.value}});
+            this.setState({name: event.target.value});
         };
 
         this.onChangeEmail = (event) => {
-            this.setState({ userCreds:{ ...this.state.userCreds,email: event.target.value}});
+            this.setState({email: event.target.value});
         };
 
         this.onChangePassword = (event) => {
-            this.setState({ userCreds:{ ...this.state.userCreds,password: event.target.value}});
+            this.setState({password: event.target.value});
         };
 
-        this.onChangePassword2 = (event) => {
-            this.setState({ userCreds:{ ...this.state.userCreds,password2: event.target.value}});
+        this.onChangePassword2 = (event, isInvalid) => {
+            this.setState({password2: event.target.value});
         };
 
         this.handleSubmit = (event) => {
             const form = event.currentTarget;
+
             if (form.checkValidity() === false) {
                 event.preventDefault();
                 event.stopPropagation();
+            } else {
+                this.setState({ validated: true });
+            
+                const newUser = {
+                    name: this.state.name,
+                    email: this.state.email,
+                    password: this.state.password,
+                    password2: this.state.password2
+                };
+                console.log(newUser);
+                event.preventDefault();
+                Axios.post('/api/users/register', newUser)
+                .then(res => { 
+                    console.log(res)
+                })
+                .catch(error => {
+                    console.log(error.response)
+                });
             }
-            this.setState({ validated: true });
-            console.log(
-                "username: " + this.state.userCreds.name,
-                "email: " + this.state.userCreds.email,
-                "password: " + this.state.userCreds.password,
-                "password2: " + this.state.usreCreds.password2
-            )
-
         };
     }
 
     render() {
         const { validated } = this.state;
+        //const {isInvalid} = this.state;
         return (
             <div>
                 <button className="button_text" onClick={this.handleShow}>
@@ -112,6 +129,7 @@ class RegisterModal extends Component {
                                         placeholder="Password"
                                         onChange={this.onChangePassword}
                                         value={this.state.password}
+                                        
                                     />
                                     <Form.Control.Feedback type="invalid">Password must contain 6 - 30 characters</Form.Control.Feedback>
                                 </Form.Group>
@@ -123,6 +141,7 @@ class RegisterModal extends Component {
                                         placeholder="Re-enter Password"
                                         onChange={this.onChangePassword2}
                                         value={this.state.password2}
+                        
                                     />
                                     <Form.Control.Feedback type="invalid">Passwords do not match</Form.Control.Feedback>
                                 </Form.Group>

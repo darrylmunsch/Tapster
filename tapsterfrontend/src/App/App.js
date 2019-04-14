@@ -46,8 +46,6 @@ class App extends Component {
         <Results />
         <br/>
         <br/>
-        <LoginModal/>
-        <RegisterModal/>
         <br/>
         <br/>
         <Footer />

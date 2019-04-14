@@ -9,7 +9,6 @@ import {
   NavItem,
   Container
 } from 'reactstrap';
-import NavLink from 'react-bootstrap/NavLink';
 import LoginModal from '../Forms/LoginModal';
 import RegisterModal from '../Forms/RegisterModal';
 
@@ -41,14 +40,11 @@ class AppNavbar extends Component {
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
                 <NavItem >
-                  <NavLink >
                     <LoginModal />
-                </NavLink>
                 </NavItem>
+                &nbsp; &nbsp; &nbsp; &nbsp;
                 <NavItem>
-                  <NavLink>
                     <RegisterModal />
-                  </NavLink>
                 </NavItem>
               </Nav>
             </Collapse>
