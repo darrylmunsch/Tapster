@@ -3,8 +3,12 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { loginUser } from "../../actions/authActions";
+import classnames from "classnames";
 import "./forms.css";
-import Axios from 'axios';
+
 
 
 class LoginModal extends Component {
@@ -17,65 +21,52 @@ class LoginModal extends Component {
             name: "",
             email: "",
             password: "",
-            password2: ""
+            password2: "",
+            errors: {}
 
         };
+    };
+    
+      componentWillReceiveProps(nextProps) {
+        if (nextProps.auth.isAuthenticated) {
+          this.props.history.push("/dashboard");
+        }
+    
+        if (nextProps.errors) {
+          this.setState({
+            errors: nextProps.errors
+          });
+        }
+      }
 
-        this.handleShow = () => {
-            this.setState({ show: true });
+    handleShow = () => {
+        this.setState({ show: true });
+    };
+
+    handleHide = () => {
+        this.setState({ show: false });
+    };
+
+    onChange = e => {
+        this.setState({ [e.target.id]: e.target.value });
+    };
+
+    handleSubmit = (e) => {
+
+        e.preventDefault();
+
+        const userData = {
+            email: this.state.email,
+            password: this.state.password
         };
+        console.log(userData);
 
-        this.handleHide = () => {
-            this.setState({ show: false });
-        };
+        this.props.loginUser(userData);
+    };
 
-        this.onChangeName = (event) => {
-            this.setState({ name: event.target.value });
-        };
-
-        this.onChangeEmail = (event) => {
-            this.setState({ email: event.target.value });
-        };
-
-        this.onChangePassword = (event) => {
-            this.setState({ password: event.target.value });
-        };
-
-        this.onChangePassword2 = (event) => {
-            this.setState({ password2: event.target.value });
-        };
-
-        this.handleSubmit = (event) => {
-            const form = event.currentTarget;
-
-            if (form.checkValidity() === false) {
-                event.preventDefault();
-                event.stopPropagation();
-            } else {
-                this.setState({ validated: true });
-                console.log(
-                    "email: " + this.state.email,
-                    "password: " + this.state.password,
-                );
-                const loginUser = {
-                    email: this.state.email,
-                    password: this.state.password
-                };
-                console.log(loginUser);
-                event.preventDefault();
-                Axios.post('/api/users/login', loginUser)
-                .then(res => { 
-                    console.log(res)
-                })
-                .catch(error => {
-                    console.log(error.response)
-                });
-            }
-        };
-    }
 
     render() {
-        const { validated } = this.state;
+        const { errors } = this.state;
         return (
             <div>
                 <button className="button_text" onClick={this.handleShow}>
@@ -94,31 +85,35 @@ class LoginModal extends Component {
                     <Modal.Body>
                         <Form
                             noValidate
-                            validated={validated}
                             onSubmit={e => this.handleSubmit(e)}
                         >
                             <Form.Row>
-                                <Form.Group as={Col} md="10" controlId="validationCustom02">
+                                <Form.Group as={Col} md="10" >
                                     <Form.Label>Email</Form.Label>
                                     <Form.Control
-                                        required
+                                        id="email"
                                         type="text"
                                         placeholder="Email"
-                                        onChange={this.onChangeEmail}
+                                        onChange={this.onChange}
                                         value={this.state.email}
+                                        error={this.email}
+                                        className={classnames("", {invalid: errors.name})}
                                     />
-                                    <Form.Control.Feedback type="invalid">Email is invalid</Form.Control.Feedback>
+                                   <span className="red-text">{errors.name}</span>
                                 </Form.Group>
-                                <Form.Group as={Col} md="10" controlId="validationCustom03">
+                                <Form.Group as={Col} md="10" >
                                     <Form.Label>Password</Form.Label>
                                     <Form.Control
                                         required
+                                        id="password"
                                         type="password"
                                         placeholder="Password"
-                                        onChange={this.onChangePassword}
+                                        onChange={this.onChange}
                                         value={this.state.password}
+                                        error={errors.password}
+                                        className={classnames("", { invalid: errors.password})}
                                     />
-                                    <Form.Control.Feedback type="invalid">Password invalid</Form.Control.Feedback>
+                                    <span className="red-text">{errors.password}</span>
                                 </Form.Group>
                             </Form.Row>
                             <Button type="submit">Submit form</Button>
@@ -130,4 +125,17 @@ class LoginModal extends Component {
     }
 }
 
-export default LoginModal
+LoginModal.propTypes = {
+    loginUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired
+};
+const mapStateToProps = state => ({
+    auth: state.auth,
+    errors: state.errors
+});
+
+export default connect(
+    mapStateToProps,
+    { loginUser }
+)(LoginModal);

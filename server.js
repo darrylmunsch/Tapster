@@ -26,6 +26,12 @@ app.use(session({
     cookie:{maxAge: 3600000, secure: false}
 }));
 
+// Passport middleware
+app.use(passport.initialize());
+
+// Passport Config
+require("./config/passport") (passport);
+
 // Routes
 app.use("/api/users", users);
 drinkroutes = require('./restapi/routes/drinkRoutes');
@@ -49,11 +55,9 @@ mongoose
     .then(() => console.log('MongoDB Connected...'))
     .catch(err => console.log(err));
 
-// Passport middleware
-app.use(passport.initialize());
 
-// Passport Config
-require("./config/passport") (passport);
+
+
 
 
 

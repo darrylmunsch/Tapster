@@ -1,12 +1,24 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
+import setAuthToken from "../utils/setAuthToken";
+import jwt_decode from "jwt-decode";
+import { setCurrentUser, logoutUser } from "../actions/authActions";
+import { Provider } from "react-redux";
+import store from "../store";
 import AppNavbar from '../components/NavBar/appNavbar';
 import SearchMenu from '../components/IngSearchBar/menu';
 import Results from '../components/Results/results';
 import Footer from '../components/Footer/footer';
-import LoginModal from '../components/Forms/LoginModal';
-import './App.css';
+
+import Landing from "../components/Landing";
+//import Register from "../components/auth/Register";
+//import Login from "../components/auth/Login";
+import PrivateRoute from "../components/private-route/PrivateRoute";
+import Dashboard from "../components/dashboard/dashboard";
 import RegisterModal from '../components/Forms/RegisterModal';
+import LoginModal from '../components/Forms/LoginModal'
 
 
 
@@ -33,25 +45,32 @@ class App extends Component {
     return body;
   };
 
-  handleResultsClick() {
-
-  }
-
+  // Check for token to keep user logged in
 
   render() {
     return (
-      <div className="App">
-        <AppNavbar />
-        <SearchMenu />
-        <Results />
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <Footer />
-      </div>
+      <Provider store={store}>
+        <Router>
+          <div className="App">
+            <AppNavbar />
+            <SearchMenu />
+            <Results />
+
+            <Route exact path="/register" component={RegisterModal} />
+            <Route exact path="/login" component={LoginModal} />
+            <Switch>
+              <PrivateRoute exact path="/dashboard" component={Dashboard} />
+            </Switch>
+            <br />
+            <br />
+            <br />
+            <br />
+            <Footer />
+          </div>
+        </Router>
+      </Provider>
     );
   }
 }
-
+//            <Route exact path="/" component={Landing} />
 export default App;

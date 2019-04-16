@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Link, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { registerUser } from "../../actions/authActions";
+import classnames from "classnames";
+import PropTypes from "prop-types";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import "./forms.css";
-import Axios from 'axios';
+
 
 
 class RegisterModal extends Component {
@@ -14,67 +20,63 @@ class RegisterModal extends Component {
         this.state = {
             show: false,
             validated: false,
-            isInvalid: true,
-            name: "", 
-            email: "", 
-            password: "", 
-            password2: ""
-        };
-
-        this.handleShow = () => {
-            this.setState({ show: true });
-        };
-
-        this.handleHide = () => {
-            this.setState({ show: false });
-        };
-
-        this.onChangeName = (event) => {
-            this.setState({name: event.target.value});
-        };
-
-        this.onChangeEmail = (event) => {
-            this.setState({email: event.target.value});
-        };
-
-        this.onChangePassword = (event) => {
-            this.setState({password: event.target.value});
-        };
-
-        this.onChangePassword2 = (event, isInvalid) => {
-            this.setState({password2: event.target.value});
-        };
-
-        this.handleSubmit = (event) => {
-            const form = event.currentTarget;
-
-            if (form.checkValidity() === false) {
-                event.preventDefault();
-                event.stopPropagation();
-            } else {
-                this.setState({ validated: true });
-            
-                const newUser = {
-                    name: this.state.name,
-                    email: this.state.email,
-                    password: this.state.password,
-                    password2: this.state.password2
-                };
-                console.log(newUser);
-                event.preventDefault();
-                Axios.post('/api/users/register', newUser)
-                .then(res => { 
-                    console.log(res)
-                })
-                .catch(error => {
-                    console.log(error.response)
-                });
-            }
+            name: "",
+            email: "",
+            password: "",
+            password2: "",
+            errors: {}
         };
     }
+    componentDidMount() {
+        // If logged in and user navigates to Register page, should redirect them to dashboard
+        if (this.props.auth.isAuthenticated) {
+            this.props.history.push("/dashboard");
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.errors) {
+            this.setState({
+                errors: nextProps.errors
+            });
+        }
+    }
+    handleShow = () => {
+        this.setState({ show: true });
+    };
+
+    handleHide = () => {
+        this.setState({ show: false });
+    };
+
+    onChange = e => {
+        this.setState({ [e.target.id]: e.target.value });
+    };
+
+    handleSubmit = e => {
+        const form = e.currentTarget;
+
+        if (form.checkValidity() === false) {
+            e.preventDefault();
+            e.stopPropagation();
+        } else {
+            this.setState({ validated: true });
+
+            const newUser = {
+                name: this.state.name,
+                email: this.state.email,
+                password: this.state.password,
+                password2: this.state.password2
+            };
+            e.preventDefault();
+            this.props.registerUser(newUser, this.props.history);
+        }
+    };
+
 
     render() {
         const { validated } = this.state;
+        const { errors } = this.state;
         //const {isInvalid} = this.state;
         return (
             <div>
@@ -93,57 +95,65 @@ class RegisterModal extends Component {
                     </Modal.Header>
                     <Modal.Body>
                         <Form
-                            noValidate
-                            validated={validated}
                             onSubmit={e => this.handleSubmit(e)}
                         >
                             <Form.Row>
-                                <Form.Group as={Col} md="10" controlId="validationCustom01">
+                                <Form.Group as={Col} md="10" >
                                     <Form.Label>Username</Form.Label>
                                     <Form.Control
                                         required
+                                        id="name"
                                         type="text"
                                         placeholder="Username"
-                                        onChange={this.onChangeName}
+                                        onChange={this.onChange}
                                         value={this.state.name}
+                                        error={errors.name}
+                                        className={classnames("", {
+                                            invalid: errors.name
+                                        })}
                                     />
-                                    <Form.Control.Feedback>Valid</Form.Control.Feedback>
-                                    <Form.Control.Feedback type="invalid">Username is invalid</Form.Control.Feedback>
+                                    <span className="text-danger">{errors.name}</span>
                                 </Form.Group>
-                                <Form.Group as={Col} md="10" controlId="validationCustom02">
+                                <Form.Group as={Col} md="10" >
                                     <Form.Label>Email</Form.Label>
                                     <Form.Control
                                         required
+                                        id="email"
                                         type="text"
                                         placeholder="Email"
-                                        onChange={this.onChangeEmail}
+                                        onChange={this.onChange}
                                         value={this.state.email}
+                                        error={errors.email}
                                     />
-                                    <Form.Control.Feedback type="invalid">Email is invalid</Form.Control.Feedback>
+                                    <span className="text-danger">{errors.email}</span>
                                 </Form.Group>
-                                <Form.Group as={Col} md="10" controlId="validationCustom03">
+                                <Form.Group as={Col} md="10" >
                                     <Form.Label>Password</Form.Label>
                                     <Form.Control
                                         required
+                                        id="password"
                                         type="password"
                                         placeholder="Password"
-                                        onChange={this.onChangePassword}
+                                        onChange={this.onChange}
                                         value={this.state.password}
-                                        
+                                        error={errors.password}
+
                                     />
-                                    <Form.Control.Feedback type="invalid">Password must contain 6 - 30 characters</Form.Control.Feedback>
+                                    <span className="text-danger">{errors.password}</span>
                                 </Form.Group>
-                                <Form.Group as={Col} md="10" controlId="validationCustom04">
+                                <Form.Group as={Col} md="10" >
                                     <Form.Label>Confirm Password</Form.Label>
                                     <Form.Control
                                         required
+                                        id="password2"
                                         type="password"
                                         placeholder="Re-enter Password"
-                                        onChange={this.onChangePassword2}
+                                        onChange={this.onChange}
                                         value={this.state.password2}
-                        
+                                        error={errors.password2}
+
                                     />
-                                    <Form.Control.Feedback type="invalid">Passwords do not match</Form.Control.Feedback>
+                                    <span className="text-danger">{errors.password2}</span>
                                 </Form.Group>
                             </Form.Row>
                             <Form.Group>
@@ -162,4 +172,18 @@ class RegisterModal extends Component {
     }
 }
 
-export default RegisterModal
+RegisterModal.propTypes = {
+    registerUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+    auth: state.auth,
+    errors: state.errors
+});
+
+export default connect(
+    mapStateToProps,
+    { registerUser }
+)(withRouter(RegisterModal));
