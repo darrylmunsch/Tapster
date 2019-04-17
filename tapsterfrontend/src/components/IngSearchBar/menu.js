@@ -29,12 +29,6 @@ class SearchMenu extends Component {
 
     render() {
         const { ingSelected } = this.state;
-        /* const {ingSelectedAlc} = this.state;
-         const {ingSelectedMix} = this.state;
-         const {ingSelectedGarn} = this.state;*/
-
-
-
 
         return (
             <div>
@@ -49,31 +43,11 @@ class SearchMenu extends Component {
                             placeholder={"Choose Ingredients..."}
                             isMulti />
                         <br />
-                        {/*<p style={{color: '#7cf1ff'}}>Mixers</p>
-                        <Select 
-                        value={ingSelectedMix}
-                        options={ingMixers} 
-                        onChange={this.handleChangeMix} 
-                        placeholder={"Choose Mixers..."} 
-                        isMulti />
-                        <br />
-                    <p style={{color: '#7cf1ff'}}>Garnishes</p>
-                        <Select 
-                        value={ingSelectedGarn}
-                        options={ingGarnishes} 
-                        onChange={this.handleChangeGarn} 
-                        placeholder={"Choose Garnishes..."} 
-                      isMulti />*/}
                     </div>
-
                 </div>
             </div>
         );
-
-
     }
-
-
 }
 
 

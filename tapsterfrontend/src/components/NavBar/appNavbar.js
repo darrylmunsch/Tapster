@@ -6,11 +6,13 @@ import {
   NavbarToggler,
   NavbarBrand,
   Nav,
+  NavLink,
   NavItem,
   Container
 } from 'reactstrap';
-import LoginModal from '../Forms/LoginModal';
-import RegisterModal from '../Forms/RegisterModal';
+
+
+
 
 class AppNavbar extends Component {
   state = {
@@ -23,8 +25,6 @@ class AppNavbar extends Component {
       isOpen: !this.state.isOpen
     });
   }
-
-
 
   render() {
     return (
@@ -40,11 +40,11 @@ class AppNavbar extends Component {
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
                 <NavItem >
-                    <LoginModal />
+                
                 </NavItem>
                 &nbsp; &nbsp; &nbsp; &nbsp;
                 <NavItem>
-                    <RegisterModal />
+                    
                 </NavItem>
               </Nav>
             </Collapse>

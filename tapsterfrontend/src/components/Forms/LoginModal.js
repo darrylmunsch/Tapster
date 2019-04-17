@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import { Link } from "react-router-dom";
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import PropTypes from "prop-types";
@@ -18,16 +19,21 @@ class LoginModal extends Component {
         this.state = {
             show: false,
             validated: false,
-            name: "",
             email: "",
             password: "",
-            password2: "",
             errors: {}
 
         };
     };
-    
-      componentWillReceiveProps(nextProps) {
+    componentDidMount() {
+        // If logged in and user navigates to Login page, should redirect them to dashboard
+        if (this.props.auth.isAuthenticated) {
+          this.props.history.push("/dashboard");
+        }
+      }
+
+
+      /*componentWillReceiveProps(nextProps) {
         if (nextProps.auth.isAuthenticated) {
           this.props.history.push("/dashboard");
         }
@@ -37,7 +43,7 @@ class LoginModal extends Component {
             errors: nextProps.errors
           });
         }
-      }
+      }*/
 
     handleShow = () => {
         this.setState({ show: true });
@@ -67,6 +73,7 @@ class LoginModal extends Component {
 
     render() {
         const { errors } = this.state;
+        
         return (
             <div>
                 <button className="button_text" onClick={this.handleShow}>
@@ -83,6 +90,9 @@ class LoginModal extends Component {
                         <Modal.Title>Log In</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
+                    <Link to="/" className="btn-flat waves-effect">
+               Back to home
+            </Link>
                         <Form
                             noValidate
                             onSubmit={e => this.handleSubmit(e)}
@@ -97,9 +107,9 @@ class LoginModal extends Component {
                                         onChange={this.onChange}
                                         value={this.state.email}
                                         error={this.email}
-                                        className={classnames("", {invalid: errors.name})}
+                                        className={classnames("", {invalid: errors.email || errors.emailnotfound})}
                                     />
-                                   <span className="red-text">{errors.name}</span>
+                                   <span className="red-text">{errors.email} {errors.emailnotfound}</span>
                                 </Form.Group>
                                 <Form.Group as={Col} md="10" >
                                     <Form.Label>Password</Form.Label>
@@ -111,9 +121,9 @@ class LoginModal extends Component {
                                         onChange={this.onChange}
                                         value={this.state.password}
                                         error={errors.password}
-                                        className={classnames("", { invalid: errors.password})}
+                                        className={classnames("", { invalid: errors.password || errors.passwordincorrect})}
                                     />
-                                    <span className="red-text">{errors.password}</span>
+                                    <span className="red-text">{errors.password}{errors.passwordincorrect}</span>
                                 </Form.Group>
                             </Form.Row>
                             <Button type="submit">Submit form</Button>
