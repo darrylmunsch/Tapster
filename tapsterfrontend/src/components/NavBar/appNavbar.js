@@ -10,6 +10,9 @@ import {
   NavItem,
   Container
 } from 'reactstrap';
+import { withRouter } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
+
 
 
 
@@ -40,11 +43,7 @@ class AppNavbar extends Component {
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
                 <NavItem >
-                
-                </NavItem>
-                &nbsp; &nbsp; &nbsp; &nbsp;
-                <NavItem>
-                    
+                  <LandingButton />
                 </NavItem>
               </Nav>
             </Collapse>
@@ -54,6 +53,12 @@ class AppNavbar extends Component {
     );
   }
 }
+ const LandingButton = withRouter(({ history }) => (
+   <Button onClick={() => { history.push('/Landing')}}>
+    Log In / Register
+   </Button>
+ ));
 
+ 
 
 export default AppNavbar;

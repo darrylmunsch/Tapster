@@ -7,20 +7,36 @@ import jwt_decode from "jwt-decode";
 import { setCurrentUser, logoutUser } from "../actions/authActions";
 import { Provider } from "react-redux";
 import store from "../store";
+/** Components */
 import AppNavbar from '../components/NavBar/appNavbar';
 import SearchMenu from '../components/IngSearchBar/menu';
 import Results from '../components/Results/results';
 import Footer from '../components/Footer/footer';
-
-import Landing from "../components/Landing";
-import Register from "../components/auth/Register";
-import Login from "../components/auth/Login";
+import Landing from "../components/Pages/Landing";
+import Register from "../components/Pages/auth/Register";
+import Login from "../components/Pages/auth/Login";
 import PrivateRoute from "../components/private-route/PrivateRoute";
-import Dashboard from "../components/dashboard/dashboard";
-import RegisterModal from '../components/Forms/RegisterModal';
-import LoginModal from '../components/Forms/LoginModal'
+import DevRoute from "../components/Pages/DevRoute";
 
 
+// Check for token to keep user logged in
+if (localStorage.jwtToken) {
+  // Set auth token header auth
+  const token = localStorage.jwtToken;
+  setAuthToken(token);
+  // Decode token and get user info and exp
+  const decoded = jwt_decode(token);
+  // Set user and isAuthenticated
+  store.dispatch(setCurrentUser(decoded));
+// Check for expired token
+  const currentTime = Date.now() / 1000; // to get in milliseconds
+  if (decoded.exp < currentTime) {
+    // Logout user
+    store.dispatch(logoutUser());
+    // Redirect to login
+    window.location.href = "./login";
+  }
+}
 
 
 class App extends Component {
@@ -53,16 +69,20 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <div className="App">
-            <AppNavbar />
-
-            <Route exact path="/" component={Landing} />
+            <Route exact path="/" component={AppNavbar}  />
+            <Route exact path="/" component={SearchMenu} />
+            <Route exact path="/" component={Results} />
+            <Route exact path="/Landing" component={AppNavbar} />
+            <Route exact path="/Landing" component={Landing} />
+            <Route exact path="/register" component={AppNavbar} />
             <Route exact path="/register" component={Register} />
+            <Route exact path="/login" component={AppNavbar} />
             <Route exact path="/login" component={Login} />
             <Switch>
-              <PrivateRoute exact path="/dashboard" component={Dashboard} />
+              <PrivateRoute exact path="/dev" component={DevRoute} />
             </Switch>
             <Footer />
-            </div>
+          </div>
         </Router>
       </Provider>
     );

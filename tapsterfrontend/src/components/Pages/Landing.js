@@ -1,14 +1,12 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import SearchMenu from '../components/IngSearchBar/menu';
-import Results from '../components/Results/results';
+
+import '../../universal.css';
 
 class Landing extends Component {
   render() {
     return (
       <div>
-        <SearchMenu />
-        <Results />
         <div style={{ height: "75vh" }} className="container valign-wrapper">
           <div className="row">
             <div className="col s12 center-align">
@@ -21,11 +19,12 @@ class Landing extends Component {
                     borderRadius: "3px",
                     letterSpacing: "1.5px"
                   }}
-                  className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+                  className="regLog_btn"
                 >
                   Register
               </Link>
               </div>
+              <br />
               <div className="col s6">
                 <Link
                   to="/login"
@@ -34,7 +33,7 @@ class Landing extends Component {
                     borderRadius: "3px",
                     letterSpacing: "1.5px"
                   }}
-                  className="btn btn-large btn-flat waves-effect white black-text"
+                  className="regLog_btn "
                 >
                   Log In
               </Link>
