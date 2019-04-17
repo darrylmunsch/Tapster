@@ -4,6 +4,16 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { registerUser } from "../../../actions/authActions";
 import classnames from "classnames";
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavLink,
+  NavItem,
+  Container
+} from 'reactstrap';
 import '../../../universal.css'
 
 class Register extends Component {
@@ -17,11 +27,21 @@ class Register extends Component {
       errors: {}
     };
   }
+  state = {
+    isOpen: false
+  }
+
+
+  toggle = () => {
+    this.setState({
+      isOpen: !this.state.isOpen
+    });
+  }
 
   componentDidMount() {
     // If logged in and user navigates to Register page, should redirect them to dashboard
     if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/dashboard");
+      this.props.history.push("/dev");
     }
   }
 
@@ -54,14 +74,25 @@ class Register extends Component {
     const { errors } = this.state;
 
     return (
+      <div>
+        <Navbar color="secondary" dark expand="sm">
+          <Container>
+            <NavbarBrand href="/">TAPSTER</NavbarBrand>
+            <NavbarToggler onClick={this.toggle} />
+            <Collapse isOpen={this.state.isOpen} navbar>
+              <Nav className="ml-auto" navbar>
+                <NavItem >
+                  <NavLink href="/">To Home</NavLink>
+                </NavItem>
+              </Nav>
+            </Collapse>
+          </Container>
+        </Navbar>
       <div className="container center">
         <br />
         <div className="row">
         <br />
           <div className="col s8 offset-s2">
-            <Link to="/" >
-              Back to home
-            </Link>
             <div className="col s12" style={{ paddingLeft: "11.250px" }}>
               <p className="login_header ">
                 <b>Register</b> below
@@ -144,6 +175,7 @@ class Register extends Component {
             </form>
           </div>
         </div>
+      </div>
       </div>
     );
   }

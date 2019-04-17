@@ -5,6 +5,16 @@ import { connect } from "react-redux";
 import { loginUser } from "../../../actions/authActions";
 import classnames from "classnames";
 import Button from 'react-bootstrap/Button';
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavLink,
+  NavItem,
+  Container
+} from 'reactstrap';
 import '../../../universal.css'
 
 
@@ -17,6 +27,16 @@ class Login extends Component {
       errors: {},
       isHidden: true
     };
+  }
+  state = {
+    isOpen: false
+  }
+
+
+  toggle = () => {
+    this.setState({
+      isOpen: !this.state.isOpen
+    });
   }
 
   componentDidMount() {
@@ -63,12 +83,23 @@ class Login extends Component {
     const { errors } = this.state;
 
     return (
+      <div>
+        <Navbar color="secondary" dark expand="sm">
+          <Container>
+            <NavbarBrand href="/">TAPSTER</NavbarBrand>
+            <NavbarToggler onClick={this.toggle} />
+            <Collapse isOpen={this.state.isOpen} navbar>
+              <Nav className="ml-auto" navbar>
+                <NavItem >
+                  <NavLink href="/">To Home</NavLink>
+                </NavItem>
+              </Nav>
+            </Collapse>
+          </Container>
+        </Navbar>
       <div className="container center" >
         <div style={{ marginTop: "4rem" }} className="login_body">
           <div className="col s8 offset-s2">
-            <Link to="/">
-              Back to home
-            </Link>
             <div className="col s12" style={{ paddingLeft: "11.250px" }}>
               <p className="login_header">
                 <b>Login</b> below
@@ -113,6 +144,7 @@ class Login extends Component {
             </form>
           </div>
         </div>
+      </div>
       </div>
     );
   }

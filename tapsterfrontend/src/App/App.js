@@ -72,11 +72,8 @@ class App extends Component {
             <Route exact path="/" component={AppNavbar}  />
             <Route exact path="/" component={SearchMenu} />
             <Route exact path="/" component={Results} />
-            <Route exact path="/Landing" component={AppNavbar} />
             <Route exact path="/Landing" component={Landing} />
-            <Route exact path="/register" component={AppNavbar} />
             <Route exact path="/register" component={Register} />
-            <Route exact path="/login" component={AppNavbar} />
             <Route exact path="/login" component={Login} />
             <Switch>
               <PrivateRoute exact path="/dev" component={DevRoute} />
