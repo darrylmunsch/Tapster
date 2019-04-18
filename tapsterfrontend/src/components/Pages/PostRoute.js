@@ -12,7 +12,6 @@ import {
     NavItem,
     Container
 } from 'reactstrap';
-import UserFav from '../userFav';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import '../../universal.css'
@@ -96,7 +95,7 @@ class PostRoute extends Component {
                         </Collapse>
                     </Container>
                 </Navbar>
-                <UserFav/>
+                
                 <div className="container" >
                     <h1>Add a new drink to the Database</h1>
 

@@ -5,7 +5,11 @@ import Modal from 'react-bootstrap/Modal';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import UserFav from '../userFav';
+import PropTypes from "prop-types";
+import Axios from 'axios';
+import { connect } from "react-redux";
+import { logoutUser } from "../../actions/authActions";
+import UserFavs from '../userFav';
 import './results.css';
 import './modal.css';
 
@@ -16,14 +20,13 @@ class Results extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      partialResults: [],
-      compareResults: [],
-      singleResults: [],
       results: [],
       pageOfItems: [],
+      userFavs: [],
       show: false,
-      key: 'partialTab'
+      ekey: 'partialTab'
     }
+
     this.onChangePage = this.onChangePage.bind(this);
     this.handleClickSearch = this.handleClickSearch.bind(this);
     this.handleSingleTabSearch = this.handleSingleTabSearch.bind(this);
@@ -31,6 +34,23 @@ class Results extends Component {
     this.handleCompareTabSearch = this.handleCompareTabSearch.bind(this);
     this.handleExactTabSearch = this.handleExactTabSearch.bind(this);
     this.handleClose = this.handleClose.bind(this);
+  }
+  
+  static defaultProps = {
+    isFav: false
+  }
+
+  componentDidMount() {
+    const { user } = this.props.auth;
+
+    const favReq = user.favorites;
+    Axios
+      .post("/api/users/favs", user)
+      .then(res => {
+
+        this.setState({ userFavs: res.data })
+      });
+
   }
 
   onChangePage(pageOfItems) {
@@ -72,19 +92,9 @@ class Results extends Component {
 
   }
 
-  /*getIngredients= (item) => {
-    var ingred = [];
-    for (var i = 0; i < 12; i++) {
-      if (item[`strIngredient${i}`] != null || "")
-        ingred.push(item[`strIngredient${i}`])
-    }
-    return ingred;
-  }*/
-
   handleClose() {
     this.setState({ show: false });
   }
-
 
   render() {
     return (
@@ -101,16 +111,16 @@ class Results extends Component {
           </Modal.Header>
           <Nav fill variant="tabs" activekey={this.state.key} defaultactivekey="/partialTab">
             <Nav.Item>
-              <Nav.Link className="tabs_style" eventkey="compareTab" onClick={this.handleCompareTabSearch} onSelect={key => this.setState({ key })}>Compare Search</Nav.Link>
+              <Nav.Link className="tabs_style" eventkey="compareTab" onClick={this.handleCompareTabSearch} onSelect={ekey => this.setState({ ekey })}>Compare Search</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link className="tabs_style" eventkey="partialTab" onClick={this.handlePartialTabSearch} onSelect={key => this.setState({ key })} >Partial Search</Nav.Link>
+              <Nav.Link className="tabs_style" eventkey="partialTab" onClick={this.handlePartialTabSearch} onSelect={ekey => this.setState({ ekey })} >Partial Search</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link className="tabs_style" eventkey="singleTab" onClick={this.handleSingleTabSearch} onSelect={key => this.setState({ key })} >Single Search</Nav.Link>
+              <Nav.Link className="tabs_style" eventkey="singleTab" onClick={this.handleSingleTabSearch} onSelect={ekey => this.setState({ ekey })} >Single Search</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link className="tabs_style" eventkey="exactTab" onClick={this.handleExactTabSearch} onSelect={key => this.setState({ key })} >Exact Search</Nav.Link>
+              <Nav.Link className="tabs_style" eventkey="exactTab" onClick={this.handleExactTabSearch} onSelect={ekey => this.setState({ ekey })} >Exact Search</Nav.Link>
             </Nav.Item>
           </Nav>
           <Modal.Body style={{ 'maxHeight': 'calc(100vh - 210px)', 'overflowY': 'auto' }} >
@@ -145,6 +155,7 @@ class Results extends Component {
                 <b>Instructions:</b><br />
                 {item.strInstructions}
                 <br /><br />
+                <UserFavs key={item._id} />
               </Container>
               <br /></div>)}
           </Modal.Body>
@@ -158,4 +169,16 @@ class Results extends Component {
   }
 }
 
-export default Results;
+Results.propTypes = {
+  logoutUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(
+  mapStateToProps,
+  { logoutUser },
+)(Results);

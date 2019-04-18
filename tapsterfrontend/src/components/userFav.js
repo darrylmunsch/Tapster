@@ -9,51 +9,44 @@ import { logoutUser } from "../actions/authActions";
 class UserFav extends Component {
 
     state = {
-        isFav: false,
-        userFavs: []
+        isFav : this.props.isFav
     }
+
 
     toggleFav = () => {
         this.setState({
             isFav: !this.state.isFav
         });
+
         const { user } = this.props.auth;
+        const id = "000000000000000000000007"
+        var checkFavs = function (element) {
+          return element === id;
+        }
+    
+        const favReq = user.favorites;
+        switch (favReq.some(checkFavs)) {
+            case true:
+                for (var i = 0; i < favReq.length; i++) {
+                    while (favReq[i] === id) {
+                        favReq.splice(i, 1);
+                    }
+                }
+                break;
+            case false:
+                favReq.push(id);
+                break;
+            default:
 
+
+        }
+        const data = {
+            favArray: favReq,
+            id: user.id
+
+        }
         Axios
-            .post("/api/users/favs", user)
-            .then(res => {
-                console.log(res.data);
-
-                this.setState({ userFavs: res.data })
-            })
-            .then(userFavs => {
-                var id = "000000000000000000000007"
-                var checkFavs = function (element) {
-                    return element == id;
-                }
-
-                const userFavs1 = this.state.userFavs;
-                console.log(userFavs1)
-                switch (userFavs1.some(checkFavs)) {
-                    case true:
-                        for (var i = 0; i < userFavs1.length; i++) {
-                            while (userFavs1[i] == id) {
-                                userFavs1.splice(i, 1);
-                            }
-                        }
-                        console.log(userFavs1);
-                        break;
-                    case false:
-                        userFavs1.push(id);
-                        console.log(userFavs1);
-                        break;
-                    default:
-                        console.log(userFavs1.some(checkFavs));
-
-                        this.setState({ userFavs: userFavs1 })
-
-                }
-            });
+            .post('/api/users/updateFavs', data)
     };
 
     render() {

@@ -4,6 +4,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
 const passport = require("passport");
+var mongoose = require('mongoose');
+var ObjectId = require('mongodb').ObjectID;
 
 // Load input validation
 const validateRegisterInput = require("../../validation/register");
@@ -79,6 +81,8 @@ router.post("/login", (req, res) => {
         // User matched
         // Create JWT Payload
         const payload = {
+          favorites: user.favorites,
+          email: user.email,
           id: user.id,
           name: user.name
         };
@@ -106,19 +110,46 @@ router.post("/login", (req, res) => {
   });
 });
 
-// @route GET api/users
+// @route GET api/users/favs
 // @desc Fetch user favs data
 // @access Public
 router.post("/favs", (req, res) => {
 
-  const email = 'testfav@test.com';
-  //console.log(user);
+  const email = req.body.email;
+
   User.findOne({ email })
     .then(user => {
-      res.json(
-        user.favorites
-      )
-    })
+      if (user != null) {
+        res.json(
+          user.favorites
+        )
+      };
+    });
+});
+
+// @route PUT api/users/updateFavs
+// @desc Update user favs
+// @access Public
+router.post('/updateFavs', (req, res) => {
+  var favArray = [];
+  const id = req.body.id;
+  favArray = req.body.favArray;
+  console.log("backend log: " + favArray)
+  User.findOneAndUpdate({ _id: id },
+    {
+      $set: {
+        favorites: favArray
+      }
+    }, function (err, user) {
+      if (err)
+        res.send(err);
+
+      if (user) {
+        res.json({ message: 'Array updated' });
+      } else {
+        res.json({ message: 'Array not exist' });
+      }
+    });
 });
 
 module.exports = router;
