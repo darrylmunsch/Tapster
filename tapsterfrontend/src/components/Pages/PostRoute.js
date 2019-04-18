@@ -12,6 +12,8 @@ import {
     NavItem,
     Container
 } from 'reactstrap';
+import UserFav from '../userFav';
+import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import '../../universal.css'
 
@@ -19,6 +21,7 @@ class PostRoute extends Component {
 
     state = {
         isOpen: false,
+        validated: false,
         strdrink: "",
         strAlcoholic: "",
         strCategory: "",
@@ -63,10 +66,15 @@ class PostRoute extends Component {
       };
 
     onSubmit = e => {
-        e.preventDefault();
+        const form = e.currentTarget;
+        if (form.checkValidity() === false) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        this.setState({ validated: true });
     }
 
-
+    // + " " after strMeasure!!
 
     render() {
         const { user } = this.props.auth;
@@ -88,136 +96,10 @@ class PostRoute extends Component {
                         </Collapse>
                     </Container>
                 </Navbar>
+                <UserFav/>
                 <div className="container" >
                     <h1>Add a new drink to the Database</h1>
-                    <form noValidate onSubmit={this.onSubmit}>
-                        <div className="login_body input-field col s12">
-                            <input
-                                onChange={this.onChange}
-                                value={this.strDrink}
-                                id="strDrink"
-                                type="text"
-                            />
-                            <label htmlFor="strDrink">Name of Drink</label>
-                        </div>
-                        <div className="login_body input-field col s12">
-                            <input
-                                onChange={this.onChange}
-                                value={this.strAlcoholic}
-                                id="strAlcoholic"
-                                type="text"
-                            />
-                            <label htmlFor="strAlcoholic">Name of Drink</label>
-                        </div>
-                        <div className="login_body input-field col s12">
-                            <input
-                                onChange={this.onChange}
-                                value={this.strCategory}
-                                id="strCategory"
-                                type="text"
-                            />
-                            <label htmlFor="strCategory">Name of Drink</label>
-                        </div>
-                        <div className="login_body input-field col s12">
-                            <input
-                                onChange={this.onChange}
-                                value={this.strDrink}
-                                id="drinkName"
-                                type="text"
-                            />
-                            <label htmlFor="drinkName">Name of Drink</label>
-                        </div>
-                        <div className="login_body input-field col s12">
-                            <input
-                                onChange={this.onChange}
-                                value={this.strDrink}
-                                id="drinkName"
-                                type="text"
-                            />
-                            <label htmlFor="drinkName">Name of Drink</label>
-                        </div>
-                        <div className="login_body input-field col s12">
-                            <input
-                                onChange={this.onChange}
-                                value={this.strDrink}
-                                id="drinkName"
-                                type="text"
-                            />
-                            <label htmlFor="drinkName">Name of Drink</label>
-                        </div>
-                        <div className="login_body input-field col s12">
-                            <input
-                                onChange={this.onChange}
-                                value={this.strDrink}
-                                id="drinkName"
-                                type="text"
-                            />
-                            <label htmlFor="drinkName">Name of Drink</label>
-                        </div>
-                        <div className="login_body input-field col s12">
-                            <input
-                                onChange={this.onChange}
-                                value={this.strDrink}
-                                id="drinkName"
-                                type="text"
-                            />
-                            <label htmlFor="drinkName">Name of Drink</label>
-                        </div>
-                        <div className="login_body input-field col s12">
-                            <input
-                                onChange={this.onChange}
-                                value={this.strDrink}
-                                id="drinkName"
-                                type="text"
-                            />
-                            <label htmlFor="drinkName">Name of Drink</label>
-                        </div>
-                        <div className="login_body input-field col s12">
-                            <input
-                                onChange={this.onChange}
-                                value={this.strDrink}
-                                id="drinkName"
-                                type="text"
-                            />
-                            <label htmlFor="drinkName">Name of Drink</label>
-                        </div>
-                        <div className="login_body input-field col s12">
-                            <input
-                                onChange={this.onChange}
-                                value={this.strDrink}
-                                id="drinkName"
-                                type="text"
-                            />
-                            <label htmlFor="drinkName">Name of Drink</label>
-                        </div>
-                        <div className="login_body input-field col s12">
-                            <input
-                                onChange={this.onChange}
-                                value={this.strDrink}
-                                id="drinkName"
-                                type="text"
-                            />
-                            <label htmlFor="drinkName">Name of Drink</label>
-                        </div>
-                        <div className="login_body input-field col s12">
-                            <input
-                                onChange={this.onChange}
-                                value={this.strDrink}
-                                id="drinkName"
-                                type="text"
-                            />
-                            <label htmlFor="drinkName">Name of Drink</label>
-                        </div>
-                        <div className="login_body input-field col s12">
-                            <input
-                                onChange={this.onChange}
-                                value={this.strDrink}
-                                id="drinkName"
-                                type="text"
-                            />
-                            <label htmlFor="drinkName">Name of Drink</label>
-                        </div>
-                    </form>
+
                 </div>
             </div>
         )
@@ -237,3 +119,24 @@ export default connect(
     mapStateToProps,
     { logoutUser }
 )(PostRoute);
+
+
+/**
+ *                     <Form
+                        noValidate
+                        validated={validated}
+                        onSubmit={e => this.onSubmit(e)}
+                    >
+                        <Form.Row>
+                            <Form.Group as={Col} md="4">
+                                <Form.Label>Drink Name</Form.Label>
+                                <Form.Control
+                                    required
+                                    type="text"
+                                    id="strDrink"
+                                    placeholder="Drink Name"
+                                />
+                            </Form.Group>
+                        </Form.Row>
+                    </Form>
+ */

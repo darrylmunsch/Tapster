@@ -5,7 +5,7 @@ import Modal from 'react-bootstrap/Modal';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-
+import UserFav from '../userFav';
 import './results.css';
 import './modal.css';
 

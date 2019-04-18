@@ -106,4 +106,19 @@ router.post("/login", (req, res) => {
   });
 });
 
+// @route GET api/users
+// @desc Fetch user favs data
+// @access Public
+router.post("/favs", (req, res) => {
+
+  const email = 'testfav@test.com';
+  //console.log(user);
+  User.findOne({ email })
+    .then(user => {
+      res.json(
+        user.favorites
+      )
+    })
+});
+
 module.exports = router;

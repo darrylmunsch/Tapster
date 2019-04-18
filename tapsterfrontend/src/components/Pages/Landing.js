@@ -42,6 +42,7 @@ class Landing extends Component {
             </Collapse>
           </Container>
         </Navbar>
+
         <div style={{ height: "75vh" }} className="container valign-wrapper">
           <div className="row">
             <div className="col s12 center-align">
