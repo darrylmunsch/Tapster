@@ -24,7 +24,7 @@ font-size: 30px;
 	background-color:#2fc7cc;
 	-moz-border-radius:7px;
 	-webkit-border-radius:7px;
-	border-radius:7px;
+	border-radius:15px;
 	border:1px solid #566963;
 	display:inline-block;
 	cursor:pointer;
@@ -54,7 +54,7 @@ font-size: 30px;
     color: rgb(17, 0, 255)
 }
 .center{
-    left: 50%
+    right: 50%
 }
 input[type=text] {
     border: 1px solid rgb(0, 89, 95);

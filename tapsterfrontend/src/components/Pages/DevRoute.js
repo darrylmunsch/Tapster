@@ -12,7 +12,9 @@ import {
   NavItem,
   Container
 } from 'reactstrap';
+import { withRouter } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
+
 import '../../universal.css'
 
 class DevRoute extends Component {
@@ -61,15 +63,17 @@ class DevRoute extends Component {
         </div>      <p className="login_body">
           Add Drinks to DB
                 </p>
-        <Button>
-          Add Drink
-        </Button>
+      <PostRouteButton/>
       </div>
     );
   }
-
 }
 
+const PostRouteButton = withRouter(({ history }) => (
+  <Button onClick={() => { history.push('/PostRoute')}}>
+   Add a Drink
+  </Button>
+));
 
 
 DevRoute.propTypes = {

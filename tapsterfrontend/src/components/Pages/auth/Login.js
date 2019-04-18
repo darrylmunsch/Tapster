@@ -97,54 +97,54 @@ class Login extends Component {
             </Collapse>
           </Container>
         </Navbar>
-      <div className="container center" >
-        <div style={{ marginTop: "4rem" }} className="login_body">
-          <div className="col s8 offset-s2">
-            <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-              <p className="login_header">
-                <b>Login</b> below
-              </p>
-              <p className="grey-text text-darken-1">
-                Don't have an account? <Link to="/register">Register</Link>
-              </p>
-            </div>
-            <form noValidate onSubmit={this.onSubmit}>
-              <div className="login_body input-field col s12">
-                <input
-                  onChange={this.onChange}
-                  value={this.state.email}
-                  error={errors.email}
-                  id="email"
-                  type="email"
-                  className={classnames("", {invalid: errors.email || errors.emailnotfound})}
-                />
-                <label htmlFor="email">Email</label>
-                <span className="text-danger">&nbsp; {errors.email} {errors.emailnotfound}</span>
-              </div>
-              <div className="login_body input-field col s12">
-                <input
-                  onChange={this.onChange}
-                  value={this.state.password}
-                  error={errors.password}
-                  id="password"
-                  type="password"
-                  className={classnames("", { invalid: errors.password || errors.passwordincorrect})}
-                />
-                <label htmlFor="password">Password</label>
-                <span className="text-danger">&nbsp; {errors.password}{errors.passwordincorrect}</span>
-              </div>
+        <div className="container center" >
+          <div style={{ marginTop: "4rem" }} className="login_body">
+            <div className="col s8 offset-s2">
               <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-                <Button
-                  type="submit"
-                  className="regLog_btn"
-                >
-                  Login
-                </Button>
+                <p className="login_header">
+                  <b>Login</b> below
+              </p>
+                <p className="grey-text text-darken-1">
+                  Don't have an account? <Link to="/register">Register</Link>
+                </p>
               </div>
-            </form>
+              <form noValidate onSubmit={this.onSubmit}>
+                <div className="login_body input-field col s12">
+                  <input
+                    onChange={this.onChange}
+                    value={this.state.email}
+                    error={errors.email}
+                    id="email"
+                    type="email"
+                    className={classnames("", { invalid: errors.email || errors.emailnotfound })}
+                  />
+                  <label htmlFor="email">Email</label>
+                  <span className="text-danger">&nbsp; {errors.email} {errors.emailnotfound}</span>
+                </div>
+                <div className="login_body input-field col s12">
+                  <input
+                    onChange={this.onChange}
+                    value={this.state.password}
+                    error={errors.password}
+                    id="password"
+                    type="password"
+                    className={classnames("", { invalid: errors.password || errors.passwordincorrect })}
+                  />
+                  <label htmlFor="password">Password</label>
+                  <span className="text-danger">&nbsp; {errors.password}{errors.passwordincorrect}</span>
+                </div>
+                <div className="col s12" style={{ paddingLeft: "11.250px" }}>
+                  <Button
+                    type="submit"
+                    className="regLog_btn"
+                  >
+                    Login
+                </Button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
       </div>
     );
   }

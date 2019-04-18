@@ -17,6 +17,7 @@ import Register from "../components/Pages/auth/Register";
 import Login from "../components/Pages/auth/Login";
 import PrivateRoute from "../components/private-route/PrivateRoute";
 import DevRoute from "../components/Pages/DevRoute";
+import PostRoute from "../components/Pages/PostRoute"
 
 
 // Check for token to keep user logged in
@@ -77,6 +78,7 @@ class App extends Component {
             <Route exact path="/login" component={Login} />
             <Switch>
               <PrivateRoute exact path="/dev" component={DevRoute} />
+              <PrivateRoute exact path="/postRoute" component={PostRoute}/>
             </Switch>
             <Footer />
           </div>
