@@ -20,13 +20,36 @@ exports.getdrink = function (req, res) {
     });
 };
 
+exports.namequery = function (req, res) {
+    const { alcNames } = require('../routes/drinkRoutes.js');
+   
+
+    if (alcNames === undefined || alcNames.length == 0) {
+        
+        Drink.find({}, function (err, drink) {
+            if (err)
+                throw (err);
+            res.status(200).send(drink);
+        });
+
+    }
+    else {
+        var drinkNames = alcNames.map(function (drnk) {
+            return drnk['label'];
+        });
+        console.log(drinkNames)
+
+        Drink.find({ strDrink: { $in: drinkNames } }, function (err, drink) {
+            if (err)
+                throw (err);
+            res.status(200).send(drink);
+        });
+
+    }
+};
 
 exports.comparequery = function (req, res) {
-    // var {ingAlcohols} =require('../routes/drinkRoutes.js');
 
-
-    //var ingred= _.union(ingMixers,ingGarnishes,ingAlcohols);
-    //console.log(ingAlcohols)
     const { ingAlcohols } = require('../routes/drinkRoutes.js');
 
     if (ingAlcohols === undefined || ingAlcohols.length == 0) {
@@ -54,7 +77,7 @@ exports.comparequery = function (req, res) {
 
 
     }
-    //var ingred= _.union(ingMixers,ingGarnishes,ingAlcohols);
+ 
 
 
 };
@@ -63,7 +86,6 @@ exports.singlequery = function (req, res) {
     const { ingAlcohols } = require('../routes/drinkRoutes.js');
 
 
-    //var ingred= _.union(ingMixers,ingGarnishes,ingAlcohols);
 
     if (ingAlcohols === undefined || ingAlcohols.length == 0) {
         ingred = ['Blank'];
@@ -91,13 +113,9 @@ exports.singlequery = function (req, res) {
 };
 
 exports.partialquery = function (req, res) {
-    //var {ingAlcohols} =require('../routes/drinkRoutes.js');
 
-    //var ingred= _.union(ingMixers,ingGarnishes,ingAlcohols);
     const { ingAlcohols } = require('../routes/drinkRoutes.js');
 
-
-    //var ingred= _.union(ingMixers,ingGarnishes,ingAlcohols);
 
     if (ingAlcohols === undefined || ingAlcohols.length == 0) {
         ingred = ['Blank'];
@@ -200,6 +218,36 @@ exports.exactquery = function (req, res) {
             res.status(200).send(drink);
         });
 
+
+    }
+};
+
+exports.favoritesquery = function (req, res) {
+    const  {currentUserFavs} = require('../routes/userRoutes');
+   
+
+
+
+    if (currentUserFavs === undefined || currentUserFavs.length == 0) {
+        var ingred = ['Blank'];
+        Drink.find({ strIngList: { $in: ingred } }, function (err, drink) {
+            if (err)
+                throw (err);
+            res.status(200).send(drink);
+        });
+
+    }
+    else {
+        var temp = [];
+        for(var i=0; i<currentUserFavs.length; i++){
+            temp.push( currentUserFavs[i])
+        }
+
+        Drink.find({ _id: { $in: temp } }, function (err, drink) {
+            if (err)
+                throw (err);
+            res.status(200).send(drink);
+        });
 
     }
 };

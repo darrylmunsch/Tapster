@@ -23,6 +23,12 @@ module.exports = function (app) {
     app.route('/api/exactquery')
         .get(drink.exactquery);
 
+    app.route('/api/myFavorites')
+        .get(drink.favoritesquery);
+    
+    app.route('/api/namequery')
+        .get(drink.namequery);
+
 
 
 
@@ -43,6 +49,19 @@ module.exports = function (app) {
         }
         res.json({ ingAlcohols })
         module.exports = { ingAlcohols };
+    });
+
+    app.post('/express_backend_nameSearch', async (req, res) => {
+
+        let alcNames;
+        try {
+            alcNames = req.session.nameSearch = await req.body;
+            module.exports = { alcNames };
+        } catch (error) {
+            res.status(500).json({ error: error.toString() });
+        }
+        res.json({ alcNames })
+        module.exports = { alcNames };
     });
 
 };

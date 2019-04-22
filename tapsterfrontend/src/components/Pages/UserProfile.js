@@ -17,7 +17,7 @@ import Button from 'react-bootstrap/Button';
 
 import '../../universal.css'
 
-class DevRoute extends Component {
+class Profile extends Component {
 
   state = {
     isOpen: false
@@ -41,15 +41,15 @@ class DevRoute extends Component {
       <div>
         <Navbar color="secondary" dark expand="sm">
           <Container>
-            <NavbarBrand href="/">TAPSTER</NavbarBrand>
+            <NavbarBrand >{user.name.split(" ")[0]}</NavbarBrand>
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
                 <NavItem >
-                  <NavLink href="/">To Home</NavLink>
+                  <NavLink href="/userHome">To Home</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink href="" onClick={this.onLogoutClick}>Log Out</NavLink>
+                  <NavLink href="/" onClick={this.onLogoutClick}>Log Out</NavLink>
                 </NavItem>
               </Nav>
             </Collapse>
@@ -70,13 +70,13 @@ class DevRoute extends Component {
 }
 
 const PostRouteButton = withRouter(({ history }) => (
-  <Button onClick={() => { history.push('/PostRoute')}}>
+  <Button onClick={() => { history.push('/userHome')}}>
    Add a Drink
   </Button>
 ));
 
 
-DevRoute.propTypes = {
+Profile.propTypes = {
   logoutUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
 };
@@ -88,4 +88,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { logoutUser }
-)(DevRoute);
+)(Profile);

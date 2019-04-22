@@ -10,14 +10,16 @@ import store from "../store";
 /** Components */
 import AppNavbar from '../components/NavBar/appNavbar';
 import SearchMenu from '../components/IngSearchBar/menu';
-import Results from '../components/Results/results';
+import Results from '../components/IngSearchBar/Results/results';
 import Footer from '../components/Footer/footer';
 import Landing from "../components/Pages/Landing";
 import Register from "../components/Pages/auth/Register";
 import Login from "../components/Pages/auth/Login";
 import PrivateRoute from "../components/private-route/PrivateRoute";
-import DevRoute from "../components/Pages/DevRoute";
-import PostRoute from "../components/Pages/PostRoute";
+import Profile from "../components/Pages/UserProfile";
+import UserHome from "../components/Pages/UserHome";
+import DrinkMenu from '../components/DrinkSearchBar/drinkMenu';
+import DrinkResults from '../components/DrinkSearchBar/drinkResults';
 
 
 
@@ -52,6 +54,7 @@ class App extends Component {
     this.callBackendAPI()
       .then(res => this.setState({ data: res.express }))
       .catch(err => console.log(err));
+
   }
   // Fetches our GET route from the Express server. (Note the route we are fetching matches the GET route from server.js
   callBackendAPI = async () => {
@@ -74,12 +77,14 @@ class App extends Component {
             <Route exact path="/" component={AppNavbar}  />
             <Route exact path="/" component={SearchMenu} />
             <Route exact path="/" component={Results} />
+            <Route exact path="/" component={DrinkMenu} />
+            <Route exact path="/" component={DrinkResults} />
             <Route exact path="/Landing" component={Landing} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
             <Switch>
-              <PrivateRoute exact path="/dev" component={DevRoute} />
-              <PrivateRoute exact path="/postRoute" component={PostRoute}/>
+              <PrivateRoute exact path="/userProfile" component={Profile} />
+              <PrivateRoute exact path="/userHome" component={UserHome}/>
             </Switch>
             <Footer />
           </div>
@@ -88,5 +93,4 @@ class App extends Component {
     );
   }
 }
-//            <Route exact path="/" component={Landing} />
 export default App;

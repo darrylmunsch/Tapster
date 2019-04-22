@@ -122,7 +122,11 @@ router.post("/favs", (req, res) => {
       if (user != null) {
         res.json(
           user.favorites
+          
         )
+        let currentUserFavs = req.session.userFavs = user.favorites;
+
+        module.exports =  {currentUserFavs};
       };
     });
 });
