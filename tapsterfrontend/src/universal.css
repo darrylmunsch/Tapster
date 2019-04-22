@@ -11,9 +11,9 @@ font-size: 30px;
     text-align: center
 }
 .regLog_btn {
-	-moz-box-shadow:inset 0px -1px 3px 0px #05ffde;
-	-webkit-box-shadow:inset 0px -1px 3px 0px #05ffde;
-	box-shadow:inset 0px -1px 3px 0px #05ffde;
+	-moz-box-shadow:inset 0px -1px 3px 0px #01b69e;
+	-webkit-box-shadow:inset 0px -1px 3px 0px #01b69e;
+	box-shadow:inset 0px -1px 3px 0px #01b69e;
 	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #2fc7cc), color-stop(1, #1c7575));
 	background:-moz-linear-gradient(top, #2fc7cc 5%, #1c7575 100%);
 	background:-webkit-linear-gradient(top, #2fc7cc 5%, #1c7575 100%);
