@@ -10,6 +10,8 @@ import Axios from 'axios';
 import { connect } from "react-redux";
 import { logoutUser } from "../../../actions/authActions";
 import UserFavs from '../../Favorites/userFav';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip'
 import './results.css';
 import './modal.css';
 
@@ -143,18 +145,34 @@ class Results extends Component {
             <Modal.Title>Search Results ({results.length})</Modal.Title>
           </Modal.Header>
           <Nav fill variant="tabs" activekey={this.state.key} defaultactivekey="/partialTab">
+          <OverlayTrigger
+          placement ="top"
+          overlay={(<Tooltip id="hi">Compare Search</Tooltip>)}>
             <Nav.Item>
               <Nav.Link className="tabs_style" eventkey="compareTab" onClick={this.handleCompareTabSearch} onSelect={ekey => this.setState({ ekey })}>Compare Search</Nav.Link>
             </Nav.Item>
+            </OverlayTrigger>
+            <OverlayTrigger
+          placement ="top"
+          overlay={(<Tooltip id="hi">Partial Search</Tooltip>)}>
             <Nav.Item>
               <Nav.Link className="tabs_style" eventkey="partialTab" onClick={this.handlePartialTabSearch} onSelect={ekey => this.setState({ ekey })} >Partial Search</Nav.Link>
             </Nav.Item>
+            </OverlayTrigger>
+            <OverlayTrigger
+          placement ="top"
+          overlay={(<Tooltip id="hi">Single Search</Tooltip>)}>
             <Nav.Item>
               <Nav.Link className="tabs_style" eventkey="singleTab" onClick={this.handleSingleTabSearch} onSelect={ekey => this.setState({ ekey })} >Single Search</Nav.Link>
             </Nav.Item>
+            </OverlayTrigger>
+            <OverlayTrigger
+          placement ="top"
+          overlay={(<Tooltip id="hi">Exact Search</Tooltip>)}>
             <Nav.Item>
               <Nav.Link className="tabs_style" eventkey="exactTab" onClick={this.handleExactTabSearch} onSelect={ekey => this.setState({ ekey })} >Exact Search</Nav.Link>
             </Nav.Item>
+            </OverlayTrigger>
           </Nav>
           <Modal.Body style={{ 'maxHeight': 'calc(100vh - 210px)', 'overflowY': 'auto' }} >
             {emptyRes}
