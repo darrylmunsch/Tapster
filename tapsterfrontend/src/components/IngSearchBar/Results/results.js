@@ -181,29 +181,29 @@ class Results extends Component {
               <Container>
                 <Row><Col><div className="text-center"><h4>{item.strDrink}</h4></div></Col></Row>
                 <Row><Col><b>Ingredients:</b></Col></Row>
-                <Row><Col md="auto">{item.strMeasure1} &nbsp;
+                <Row><Col md="auto">{item.strMeasure1} 
                 {item.strIngredient1}</Col>
-                  <Col md="auto">{item.strMeasure3} &nbsp;
+                  <Col md="auto">{item.strMeasure3} 
                 {item.strIngredient3}</Col>
-                  <Col md="auto">{item.strMeasure5} &nbsp;
+                  <Col md="auto">{item.strMeasure5} 
                 {item.strIngredient5}</Col>
-                  <Col md="auto">{item.strMeasure7} &nbsp;
+                  <Col md="auto">{item.strMeasure7} 
                 {item.strIngredient7}</Col>
-                  <Col md="auto">{item.strMeasure9} &nbsp;
+                  <Col md="auto">{item.strMeasure9} 
                 {item.strIngredient9}</Col>
-                  <Col md="auto">{item.strMeasure11} &nbsp;
+                  <Col md="auto">{item.strMeasure11} 
                 {item.strIngredient11}</Col></Row>
-                <Row><Col md="auto">{item.strMeasure2} &nbsp;
+                <Row><Col md="auto">{item.strMeasure2} 
                 {item.strIngredient2}</Col>
-                  <Col md="auto">{item.strMeasure4} &nbsp;
+                  <Col md="auto">{item.strMeasure4} 
                 {item.strIngredient4}</Col>
-                  <Col md="auto">{item.strMeasure6} &nbsp;
+                  <Col md="auto">{item.strMeasure6} 
                 {item.strIngredient6}</Col>
-                  <Col md="auto">{item.strMeasure8} &nbsp;
+                  <Col md="auto">{item.strMeasure8} 
                 {item.strIngredient8}</Col>
-                  <Col md="auto">{item.strMeasure10} &nbsp;
+                  <Col md="auto">{item.strMeasure10} 
                 {item.strIngredient10}</Col>
-                  <Col md="auto">{item.strMeasure12} &nbsp;
+                  <Col md="auto">{item.strMeasure12}
                 {item.strIngredient12}</Col></Row><br />
                 <b>Instructions:</b><br />
                 {item.strInstructions}

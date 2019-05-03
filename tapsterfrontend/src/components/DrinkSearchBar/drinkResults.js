@@ -16,17 +16,17 @@ class DrinkResults extends Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-          results: [],
-          pageOfItems: [],
-          userFavs: [],
-          show: false,
-          emptyRes: ""
+            results: [],
+            pageOfItems: [],
+            userFavs: [],
+            show: false,
+            emptyRes: ""
         }
-    
+
         this.onChangePage = this.onChangePage.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.handleClickSearch = this.handleClickSearch.bind(this);
-      }
+    }
 
     static defaultProps = {
         isFav: false,
@@ -84,7 +84,7 @@ class DrinkResults extends Component {
                     onClick={this.handleClickSearch}>
                     Search Database
         </button>
-        
+
                 <Modal size="lg" show={this.state.show} onHide={this.handleClose} scrollable="true">
                     <Modal.Header closeButton>
                         <Modal.Title>Search Results ({results.length})</Modal.Title>
@@ -96,30 +96,30 @@ class DrinkResults extends Component {
                             <Container>
                                 <Row><Col><div className="text-center"><h4>{item.strDrink}</h4></div></Col></Row>
                                 <Row><Col><b>Ingredients:</b></Col></Row>
-                                <Row><Col md="auto">{item.strMeasure1} &nbsp;
-                {item.strIngredient1}</Col>
-                                    <Col md="auto">{item.strMeasure3} &nbsp;
-                {item.strIngredient3}</Col>
-                                    <Col md="auto">{item.strMeasure5} &nbsp;
-                {item.strIngredient5}</Col>
-                                    <Col md="auto">{item.strMeasure7} &nbsp;
-                {item.strIngredient7}</Col>
-                                    <Col md="auto">{item.strMeasure9} &nbsp;
-                {item.strIngredient9}</Col>
-                                    <Col md="auto">{item.strMeasure11} &nbsp;
-                {item.strIngredient11}</Col></Row>
-                                <Row><Col md="auto">{item.strMeasure2} &nbsp;
-                {item.strIngredient2}</Col>
-                                    <Col md="auto">{item.strMeasure4} &nbsp;
-                {item.strIngredient4}</Col>
-                                    <Col md="auto">{item.strMeasure6} &nbsp;
-                {item.strIngredient6}</Col>
-                                    <Col md="auto">{item.strMeasure8} &nbsp;
-                {item.strIngredient8}</Col>
-                                    <Col md="auto">{item.strMeasure10} &nbsp;
-                {item.strIngredient10}</Col>
-                                    <Col md="auto">{item.strMeasure12} &nbsp;
-                {item.strIngredient12}</Col></Row><br />
+                                <Row><Col md="auto">{item.strMeasure1} 
+                                {item.strIngredient1}</Col>
+                                    <Col md="auto">{item.strMeasure3} 
+                                {item.strIngredient3}</Col>
+                                    <Col md="auto">{item.strMeasure5}
+                                {item.strIngredient5}</Col>
+                                    <Col md="auto">{item.strMeasure7}
+                                {item.strIngredient7}</Col>
+                                    <Col md="auto">{item.strMeasure9} 
+                                {item.strIngredient9}</Col>
+                                    <Col md="auto">{item.strMeasure11} 
+                                {item.strIngredient11}</Col></Row>
+                                <Row><Col md="auto">{item.strMeasure2} 
+                                {item.strIngredient2}</Col>
+                                    <Col md="auto">{item.strMeasure4} 
+                                {item.strIngredient4}</Col>
+                                    <Col md="auto">{item.strMeasure6} 
+                                {item.strIngredient6}</Col>
+                                    <Col md="auto">{item.strMeasure8} 
+                                {item.strIngredient8}</Col>
+                                    <Col md="auto">{item.strMeasure10} 
+                                {item.strIngredient10}</Col>
+                                    <Col md="auto">{item.strMeasure12} 
+                                {item.strIngredient12}</Col></Row><br />
                                 <b>Instructions:</b><br />
                                 {item.strInstructions}
                                 <br /><br />
