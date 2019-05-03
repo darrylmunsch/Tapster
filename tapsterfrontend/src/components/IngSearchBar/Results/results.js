@@ -11,7 +11,7 @@ import { connect } from "react-redux";
 import { logoutUser } from "../../../actions/authActions";
 import UserFavs from '../../Favorites/userFav';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Tooltip from 'react-bootstrap/Tooltip'
+import Tooltip from 'react-bootstrap/Tooltip';
 import './results.css';
 import './modal.css';
 

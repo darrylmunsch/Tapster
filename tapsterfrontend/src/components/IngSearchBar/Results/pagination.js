@@ -1,5 +1,7 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
 import './results.css';
 
 const propTypes = {
@@ -15,9 +17,9 @@ const defaultProps = {
 }
 
 class Pagination extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state = { pager:{} };
+        this.state = { pager: {} };
     }
 
     componentWillMount() {
@@ -35,7 +37,7 @@ class Pagination extends Component {
     }
 
     setPage(page) {
-        var {items,pageSize} = this.props;
+        var { items, pageSize } = this.props;
         var pager = this.state.pager;
 
         if (page < 1 || page > pager.totalpages) {
@@ -70,9 +72,9 @@ class Pagination extends Component {
             //less than 10 total pages shows all
             startPage = 1;
             endPage = totalPages;
-        } else{
+        } else {
             //more than 10 pages... will calculate start and end pages
-            if (currentPage <= 3){
+            if (currentPage <= 3) {
                 startPage = 1;
                 endPage = 5;
             } else if (currentPage + 4 >= totalPages) {
@@ -114,11 +116,20 @@ class Pagination extends Component {
 
         return (
             <ul className="pagination" >
+
                 <li className={pager.currentPage === 1 ? 'disabled' : ''}>
-                    <button className="button_style2" onClick={() => this.setPage(1)}>First</button>
+                    <OverlayTrigger
+                        placement="bottom"
+                        overlay={(<Tooltip id="hi">First Page</Tooltip>)}>
+                        <button className="button_style2" onClick={() => this.setPage(1)}>&#60;&#60; </button>
+                    </OverlayTrigger>
                 </li>
                 <li className={pager.currentPage === 1 ? 'disabled' : ''}>
-                    <button className="button_style2" onClick={() => this.setPage(pager.currentPage - 1)}>Previous</button>
+                    <OverlayTrigger
+                        placement="bottom"
+                        overlay={(<Tooltip id="hi">Previous Page</Tooltip>)}>
+                        <button className="button_style2" onClick={() => this.setPage(pager.currentPage - 1)}> &#60; </button>
+                    </OverlayTrigger>
                 </li>
                 {pager.pages.map((page, index) =>
                     <li key={index} className={pager.currentPage === page ? 'active' : ''}>
@@ -126,10 +137,18 @@ class Pagination extends Component {
                     </li>
                 )}
                 <li className={pager.currentPage === pager.totalPages ? 'disabled' : ''}>
-                    <button className="button_style2" onClick={() => this.setPage(pager.currentPage + 1)}>Next</button>
+                    <OverlayTrigger
+                        placement="bottom"
+                        overlay={(<Tooltip id="hi">Next Page</Tooltip>)}>
+                        <button className="button_style2" onClick={() => this.setPage(pager.currentPage + 1)}> > </button>
+                    </OverlayTrigger>
                 </li>
                 <li className={pager.currentPage === pager.totalPages ? 'disabled' : ''}>
-                    <button className="button_style2" onClick={() => this.setPage(pager.totalPages)}>Last</button>
+                    <OverlayTrigger
+                        placement="bottom"
+                        overlay={(<Tooltip id="hi">Last Page</Tooltip>)}>
+                        <button className="button_style2" onClick={() => this.setPage(pager.totalPages)}> >> </button>
+                    </OverlayTrigger>
                 </li>
             </ul>
         );
