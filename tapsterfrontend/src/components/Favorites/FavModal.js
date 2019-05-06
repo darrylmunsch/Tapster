@@ -9,6 +9,7 @@ import Axios from 'axios';
 import UserFavs from '../Favorites/userFav';
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
+import SpinnerComponent from '../LoadingSpinner';
 import '../IngSearchBar/Results/results.css';
 import '../IngSearchBar/Results/modal.css';
 import '../../universal.css';
@@ -21,7 +22,8 @@ class FavModal extends Component {
             pageOfItems: [],
             userFavs: [],
             show: false,
-            emptyRes: ""
+            emptyRes: "",
+            isLoading: false
         }
 
         this.onChangePage = this.onChangePage.bind(this);
@@ -47,7 +49,7 @@ class FavModal extends Component {
 
     onClick() {
         const { user } = this.props.auth;
-
+        this.setState({ isLoading: true, show: true, emptyRes: "Loading Favorites..." });
         Axios
             .post('/api/users/favs', user)
             .then(res => {
@@ -59,21 +61,23 @@ class FavModal extends Component {
             .then(favs =>
                 this.setState({ favs },
                     () => console.log("Favorites fetched...", favs),
-                    this.handleEmptyRes(favs)
+                    this.handleEmptyRes(favs),
+                    this.resetLoading()
                 ));
-
-        this.setState({ show: true });
+        
     }
 
     handleEmptyRes(favs) {
-
         if (favs.length === 0) {
             this.setState({ emptyRes: "You have no favorites." });
         } else {
             this.setState({ emptyRes: "" })
         }
         console.log(this.state.emptyRes);
+    }
 
+    resetLoading() {
+        this.setState({ isLoading: false });
     }
 
     handleClose() {
@@ -89,8 +93,12 @@ class FavModal extends Component {
 
 
     render() {
-        const favs = this.state.favs;
-        const emptyRes = this.state.emptyRes;
+        const 
+        favs = this.state.favs, 
+        emptyRes = this.state.emptyRes,
+        isLoading = this.state.isLoading;
+        
+        
         return (
             <div className="center_search">
                 <button className="text_button"
@@ -104,6 +112,7 @@ class FavModal extends Component {
                     </Modal.Header>
                     <Modal.Body style={{ 'maxHeight': 'calc(100vh - 210px)', 'overflowY': 'auto' }} >
                         {emptyRes}
+                        <SpinnerComponent isLoading={isLoading} />
                         {this.state.pageOfItems.map(item => <div key={item._id} >
                             <Container>
                                 <Row><Col><div className="text-center"><h4>{item.strDrink}</h4></div></Col></Row>
